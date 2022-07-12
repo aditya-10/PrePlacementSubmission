@@ -1,0 +1,52 @@
+1. Reverse Linked List
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode *pre = new ListNode(0), *cur = head;
+        pre -> next = head;
+        while (cur && cur -> next) {
+            ListNode* temp = pre -> next;
+            pre -> next = cur -> next;
+            cur -> next = cur -> next -> next;
+            pre -> next -> next = temp;
+        }
+        return pre -> next;
+    }
+};
+
+2. Remove Duplicates from Sorted List
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* cur = head;
+        while(cur) {
+        	while(cur->next && cur->val == cur->next->val) {
+        		cur->next = cur->next->next;
+        	}
+        	cur = cur->next;
+        }
+        return head;
+    }
+};
