@@ -1,0 +1,72 @@
+Binary Tree Preorder Traversal
+
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        vector <int> v;
+        if(!root) return v;
+        
+        stack <TreeNode*> s;
+        
+        s.push(root);
+        
+        while(!s.empty()) {
+            TreeNode* current = s.top();
+            s.pop();
+            v.push_back(current->val);
+            
+            if(current->right) s.push(current->right);
+            
+            if(current->left) s.push(current->left);
+        }
+        return v;
+    }
+};
+
+Binary Tree Inorder Traversal
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        stack<TreeNode*> todo;
+        while (root || !todo.empty()) {
+            while (root) {
+                todo.push(root);
+                root = root -> left;
+            }
+            root = todo.top();
+            todo.pop();
+            nodes.push_back(root -> val);
+            root = root -> right;
+        }
+        return nodes;
+    }
+};
+
+Binary Tree Postorder Traversal
+
+class Solution {
+public:
+    vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> nodes;
+        stack<TreeNode*> todo;
+        TreeNode* last = NULL;
+        while (root || !todo.empty()) {
+            if (root) {
+                todo.push(root);
+                root = root -> left;
+            } else {
+                TreeNode* node = todo.top();
+                if (node -> right && last != node -> right) {
+                    root = node -> right;
+                } else {
+                    nodes.push_back(node -> val);
+                    last = node;
+                    todo.pop();
+                }
+            }
+        }
+        return nodes;
+    }
+};
