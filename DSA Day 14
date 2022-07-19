@@ -1,0 +1,71 @@
+Lowest Common Ancestor of a Binary Search Tree
+
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        TreeNode* cur = root;
+        while (true) {
+            if (p -> val < cur -> val && q -> val < cur -> val) {
+                cur = cur -> left;
+            } else if (p -> val > cur -> val && q -> val > cur -> val) {
+                cur = cur -> right;
+            } else {
+                break;
+            }
+        }
+        return cur;
+    }
+};
+
+Two Sum IV - Input is a BST
+
+class Solution {
+public:
+    bool findTarget(TreeNode* root, int k) {
+        vector<int> nums;
+        inorder(root, nums);
+        return findTargetInSortedArray(nums, k);
+    }
+
+private:
+    void inorder(TreeNode* node, vector<int>& nums) {
+        if (!node) return;
+        inorder(node->left, nums);
+        nums.push_back(node->val);
+        inorder(node->right, nums);
+    }
+
+    bool findTargetInSortedArray(vector<int> a, int target) {
+        for (int i = 0, j = a.size() - 1; i < j;) {
+            int sum = a[i] + a[j];
+            if (sum == target) {
+                return true;
+            }
+            else if (sum < target) {
+                i++;
+            }
+            else {
+                j--;
+            }
+        }
+
+        return false;
+    
+    }
+};
+
+Validate Binary Search Tree
+
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root, NULL, NULL);
+    }
+
+    bool isValidBST(TreeNode* root, TreeNode* minNode, TreeNode* maxNode) {
+        if(!root) return true;
+        if(minNode && root->val <= minNode->val || maxNode && root->val >= maxNode->val)
+            return false;
+        return isValidBST(root->left, minNode, root) && isValidBST(root->right, root, maxNode);
+    }
+};
