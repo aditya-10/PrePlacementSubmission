@@ -1,0 +1,57 @@
+Invert Binary Tree
+
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+        if ((nullptr == root) || ((nullptr == root->left) && (nullptr == root->right)))
+            return root;
+        
+        swapLeftnRight(root);
+        return root;
+    }
+    
+    void swapLeftnRight(TreeNode *node) {
+    
+        if (nullptr != node) {
+            std::swap(node->left, node->right);
+            swapLeftnRight(node->left);
+            swapLeftnRight(node->right);
+        }
+    }
+};
+
+Path Sum
+
+class Solution {
+public:
+    bool hasPathSum(TreeNode* root, int targetSum) {
+        if(root==NULL)
+             return false;
+        
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,targetSum-root->val});
+        
+        while(!q.empty())
+        {
+            TreeNode* node=q.front().first;
+            int sum=q.front().second;
+            q.pop();
+            
+            if(node->left==NULL && node->right==NULL &&(sum==0))
+                return true;
+           
+            if(node->left!=NULL)
+            {
+                q.push({node->left,sum-node->left->val});
+                
+            }
+            
+            if(node->right!=NULL)
+            {
+                q.push({node->right,sum-node->right->val});
+            }
+            
+        }
+        return false;
+    }
+};
