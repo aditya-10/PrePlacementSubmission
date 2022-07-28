@@ -1,0 +1,37 @@
+Longest Substring Without Repeating Characters
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        vector<int> dict(256, -1);
+        int maxLen = 0, start = -1;
+        for (int i = 0; i != s.length(); i++) {
+            if (dict[s[i]] > start)
+                start = dict[s[i]];
+            dict[s[i]] = i;
+            maxLen = max(maxLen, i - start);
+        }
+        return maxLen;
+    }
+};
+
+Permutation in String
+
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        vector<int> cur(26), goal(26);
+	    for(char c : s1) 
+            goal[c - 'a']++;
+	    for(int i = 0; i < s2.size(); i++) 
+        {
+		    cur[s2[i] - 'a']++;
+		    if(i >= s1.size()) 
+                cur[s2[i - s1.size()] - 'a']--;
+		    if(goal == cur) 
+                return true;
+	    }
+	return false;
+    }
+};
+
