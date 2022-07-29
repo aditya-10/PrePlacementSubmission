@@ -1,0 +1,51 @@
+Flood Fill
+
+class Solution {
+public:
+    void dfs(vector<vector<int>>& image, int i, int j,int val, int newColor)
+    {
+        if(i<0 || i>=image.size() || j<0 || j>= image[0].size() || image[i][j] == newColor || image[i][j] != val)
+        {
+            return;
+        }
+        image[i][j] = newColor;
+        dfs(image,i-1,j,val,newColor);
+        dfs(image,i+1,j,val,newColor);
+        dfs(image,i,j-1,val,newColor);
+        dfs(image,i,j+1,val,newColor);
+    }
+    
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor)
+    {
+        int val = image[sr][sc];
+        dfs(image,sr,sc,val,newColor);
+        return image;
+    }
+};
+
+Max Area of Island
+
+class Solution {
+public:
+    int getArea(int x, int y, vector<vector<int>>& list){
+		if( x<0 || (x>=list.size()) || (y<0) || (y>=list[x].size()) ){
+			return 0;
+		}   
+		if(list[x][y] == 1){
+			list[x][y] = 0;
+			return (1 + (getArea(x+1,y,list) + getArea(x-1,y,list) + getArea(x,y+1,list) + getArea(x,y-1,list))); 
+		}
+		return 0;
+	}
+
+	int maxAreaOfIsland(vector<vector<int>>& grid) {
+		int max_value = 0;
+		for(int i=0; i<grid.size(); i++){
+			for(int j=0; j<grid[i].size(); j++){
+				 if(grid[i][j]==1)
+					max_value = max(max_value, getArea(i, j, grid));
+			}
+		}
+		return max_value;
+	}
+};
